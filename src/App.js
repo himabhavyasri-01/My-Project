@@ -9,25 +9,33 @@ class App extends Component {
   }
 
   updateText = event => {
+
     const value = event.target.value;
+    
     if(value === "=") {
+      var answer = "";
       try {
-        this.setState((prevState) => ({result: prevState.result + "=" + eval(prevState.result)
-      }))
+        console.log(this.state.result);
+        answer = eval(this.state.result);
       }
       catch (error) {
-        console.log(error);
+        answer = "Invalid Expression"
       }
+      this.setState({result: answer});
     }
+
     else if(value === "clear") {
       this.setState({result : ""})
     }
+
     else if(value === "cancel") {
-      this.setState((prevState) => ({result: prevState.result.slice(0, -1)}))
+      this.setState((prevState) => ({result: String(prevState.result).slice(0, -1)}))
     }
+
     else {
       this.setState((prevState) => ({ result: prevState.result + value }));
     }
+    
   }
 
   render () {
