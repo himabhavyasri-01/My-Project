@@ -1,16 +1,18 @@
+import { Component } from 'react';
 import './index.css'
 
-const Button = (props) => {
-    const {text, handleClick} = props;
+class Button extends Component {
 
-    const click = () => {
-        handleClick(text)
+    click = () => {
+        this.props.handleClick(this.props.value)
     }
-    
-    let className = (text === "=") ? "enter" : "button"
-    return (
-        <button className={className} value={text} onClick={click}>{text}</button>
-    )
+
+    render() {
+        const className = (this.props.value === "=") ? "enter" : "button";
+        return (
+            <button className={className} value={this.props.value} onClick={this.click}>{this.props.value}</button>
+        )
+    }
 }
 
 export default Button

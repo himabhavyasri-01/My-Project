@@ -1,13 +1,15 @@
 import './index.css'
+import { Component } from 'react';
 
-const Input = (props) => {
-    const {text} = props;
-    console.log({text})
-    return (
-        <div className='result-container'>
-            <p className="result-item" value={text}>{text}</p>
-        </div>
-    )
+class Input extends Component {
+
+    render() {
+        return (
+            <div className='result-container'>
+                <p className="result-item" value={this.props.value}>{this.props.value}</p>
+            </div>
+        )
+    }
 }
 
 export default Input
