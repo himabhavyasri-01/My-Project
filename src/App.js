@@ -1,85 +1,73 @@
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import { Component } from 'react';
+import Input from './components/Input'
+import Button from './components/Button'
 
 class App extends Component {
 
-  state = {
-    result : ' ',
+  constructor(props) {
+    super(props);
+    this.state = {result: ""};
   }
 
-  updateText = event => {
+  clear = (text) => {
+      this.setState({result: ""});
+      const {result} = this.state;
+      console.log({result});
+  }
 
-    const value = event.target.value;
-    
-    if(value === "=") {
-      var answer = "";
-      try {
-        console.log(this.state.result);
-        answer = eval(this.state.result);
-      }
-      catch (error) {
-        answer = "Invalid Expression"
-      }
+  addText = (text) => {
+    this.setState((prevState) => ({result: prevState.result + text}));
+    const {result} = this.state;
+    console.log({result});
+  }
+
+  pop = (text) => {
+    this.setState((prevState) => ({result: String(prevState.result).slice(0, -1)}))
+  }
+
+  calculate = (text) => {
+    var answer = "";
+    try {
+      answer = eval(this.state.result);
+    }
+    catch (error) {
+      answer = "Invalid Expression"
+    }
+    if(isNaN(answer)) {
+      this.setState({result: "Divide by Zero error"})
+    }
+    else {
       this.setState({result: answer});
     }
-
-    else if(value === "clear") {
-      this.setState({result : ""})
-    }
-
-    else if(value === "cancel") {
-      this.setState((prevState) => ({result: String(prevState.result).slice(0, -1)}))
-    }
-
-    else {
-      this.setState((prevState) => ({ result: prevState.result + value }));
-    }
-    
+  
   }
 
   render () {
-      const {result} = this.state;
-      console.log({result});
-      return (
-        <div className='bg-container'>
-          <div className='calculator'>
-            <div>
-              <input type="text" className="input" value={result} onChange=""></input>
-            </div>
-            <div>
-              <button className="button" onClick={this.updateText} value="clear">AC</button>
-              <button className="button" onClick={this.updateText} value="cancel">x</button>
-              <button className='button' onClick={this.updateText} value="%">%</button>
-              <button className='button' onClick={this.updateText} value="/">/</button>
-            </div> 
-            
-            <div>
-              <button className='button' onClick={this.updateText} value="7">7</button>
-              <button className='button' onClick={this.updateText} value="8">8</button>
-              <button className='button' onClick={this.updateText} value="9">9</button>
-              <button className='button' onClick={this.updateText} value="*">*</button>
-            </div>
-            
-            <div>
-              <button className='button' onClick={this.updateText} value="4">4</button>
-              <button className='button' onClick={this.updateText} value="5">5</button>
-              <button className='button' onClick={this.updateText} value="6">6</button>
-              <button className='button' onClick={this.updateText} value="-">-</button>
-            </div>
-            
-            <div>
-              <button className='button' onClick={this.updateText} value="1">1</button>
-              <button className='button' onClick={this.updateText} value="2">2</button> 
-              <button className='button' onClick={this.updateText} value="3">3</button>
-              <button className='button' onClick={this.updateText} value="+">+</button>
-            </div>
-            
-            <div>
-              <button className='button' onClick={this.updateText} value="0">0</button>
-              <button className='button' onClick={this.updateText} value=".">.</button>
-              <button className="enter" onClick={this.updateText}  value="=">=</button>
-            </div>  
+    const {result} = this.state;
+    return (
+      <div className='bg-container'>
+        <div className='calculator'>
+          <Input text={result}/>
+            <Button text="AC" handleClick={this.clear} />
+            <Button text="x" handleClick={this.pop} />
+            <Button text="%" handleClick={this.addText} />
+            <Button text="/" handleClick={this.addText} /> <br />
+            <Button text="7" handleClick={this.addText} />
+            <Button text="8" handleClick={this.addText} />
+            <Button text="9" handleClick={this.addText} />
+            <Button text="*" handleClick={this.addText} /> <br />
+            <Button text="4" handleClick={this.addText} />
+            <Button text="5" handleClick={this.addText} />
+            <Button text="6" handleClick={this.addText} />
+            <Button text="-" handleClick={this.addText} /> <br />
+            <Button text="1" handleClick={this.addText} />
+            <Button text="2" handleClick={this.addText} />
+            <Button text="3" handleClick={this.addText} />
+            <Button text="+" handleClick={this.addText} /> <br />
+            <Button text="0" handleClick={this.addText} />
+            <Button text="." handleClick={this.addText} />
+            <Button text="=" handleClick={this.calculate} />
           </div>
         </div>
       )
