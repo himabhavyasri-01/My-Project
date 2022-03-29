@@ -8,14 +8,17 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {result: ""};
-    this.calculate = this.calculate.bind(this, "Invalid Expression");
+    this.calculate = this.calculate.bind(this);
+    this.clear = this.clear.bind(this);
+    this.addText = this.addText.bind(this);
+    this.pop = this.pop.bind(this);
   }
 
-  clear = () => {
+  clear()  {
       this.setState({result: ""});
   }
 
-  addText = (event)  => {
+  addText(event) {
     const {result} = this.state;
     if(result === "Invalid Expression" || result === "Divide by Zero Error" || result === "Infinity") {
       this.setState({result: event.target.value});
@@ -25,18 +28,17 @@ class App extends Component {
     }
   }
 
-  pop = () => {
+  pop() {
     this.setState((prevState) => ({result: String(prevState.result).slice(0, -1)}))
   }
 
-
-  calculate(name) {
+  calculate() {
     var answer = "";
     try {
       answer = eval(this.state.result);
     }
     catch {
-      answer = name;
+      answer = "Invalid Expression";
     } 
     this.setState({result: answer});
   }
