@@ -3,14 +3,14 @@ import './index.css'
 
 class Button extends Component {
 
-    click = () => {
-        this.props.handleClick(this.props.value)
+    constructor(props) {
+        super(props);
     }
 
     render() {
         const className = (this.props.value === "=") ? "enter" : "button";
         return (
-            <button className={className} value={this.props.value} onClick={this.click}>{this.props.value}</button>
+            <button className={className} value={this.props.value} onClick={this.props.handleClick}>{this.props.value}</button>
         )
     }
 }

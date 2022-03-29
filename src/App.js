@@ -8,19 +8,20 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {result: ""};
+    this.calculate = this.calculate.bind(this, "Invalid Expression");
   }
 
   clear = () => {
       this.setState({result: ""});
   }
 
-  addText = (value) => {
+  addText = (event)  => {
     const {result} = this.state;
     if(result === "Invalid Expression" || result === "Divide by Zero Error" || result === "Infinity") {
-      this.setState({result: value});
+      this.setState({result: event.target.value});
     }
     else {
-      this.setState((prevState) => ({result: prevState.result + value}));
+      this.setState((prevState) => ({result: prevState.result + event.target.value}));
     }
   }
 
@@ -29,22 +30,17 @@ class App extends Component {
   }
 
 
-  calculate = () => {
+  calculate(name) {
     var answer = "";
     try {
       answer = eval(this.state.result);
     }
-    catch (error) {
-      answer = "Invalid Expression"
+    catch {
+      answer = name;
     } 
-
-    answer = String(answer);
-    
-    if(answer === "NaN") {
-      answer = "Divide by Zero Error"
-    }
     this.setState({result: answer});
   }
+
 
   render () {
     const {result} = this.state;
